@@ -48,10 +48,10 @@ begin
 
 p_sek : process (clk) begin -- D flip-flop operation process
 	if rising_edge(clk) then
-		if rst = '1' then -- reset output of D FF if rst == 1
+		if rst = '1' then -- reset output of all D FF if rst == 1
 			sig_Q <= (others => '0');
 		else
-			sig_Q <= sig_D; -- D FF normal function mode(input transfer to the output)
+			sig_Q <= sig_D; -- D FF normal function mode(input transfer to the output with every tising edge of 'clk')
 		end if;
 	end if;
 end process;
