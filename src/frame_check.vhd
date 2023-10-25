@@ -34,35 +34,65 @@ entity frame_check is
 			fr_LENGTH : natural := 16);
     Port ( clk : in  STD_LOGIC;
 			  sclk_re : in  STD_LOGIC;
-           fr_en : in  STD_LOGIC;
+			  cs_b_re : in  STD_LOGIC;
+			  cs_b_fe : in  STD_LOGIC;
+           fr_en_b : in  STD_LOGIC;
+			  fr_start : out  STD_LOGIC;
+			  fr_end : out  STD_LOGIC;
            fr_err : out  STD_LOGIC);
 end frame_check;
 
 architecture Behavioral of frame_check is
 
-signal sig_n : integer := 0;
-signal sig_out : STD_LOGIC;
+signal sig_c : integer := 0;
+signal sig_s : integer := 0;
+
+signal sig_out : STD_LOGIC := '0';
 
 begin
-	p_sek : process (clk,fr_en,sclk_re) begin
+--	p_sek : process (clk) begin
+--		if rising_edge(clk) then
+--			if sclk_re = '1' then
+--				if fr_en_b = '0' then
+--					sig_n <= sig_n + 1;
+--				else
+--					if sig_n = fr_LENGTH then
+--						sig_out <= '0';
+--					elsif sig_n = 0 then
+--						sig_out <= '0';
+--					else
+--						sig_out <= '1';
+--					end if;
+--				sig_n <= 0;
+--				end if;
+--			end if;
+--		end if;
+--end process;
+
+	p_sek : process (clk) begin
 		if rising_edge(clk) then
 			if sclk_re = '1' then
-				if fr_en = '1' then
-					sig_n <= sig_n + 1;
-				else
-					if sig_n = fr_LENGTH then
-						sig_out <= '0';
-					elsif sig_n = 0 then
-						sig_out <= '0';
-					else
-						sig_out <= '1';
-					end if;
-				sig_n <= 0;
-				end if;
+				sig_s <= sig_c;
 			end if;
 		end if;
-end process;
+	end process;
+	
+	p_komb : process(fr_en_b,sig_s) begin
+			if fr_en_b = '0' then
+				sig_c <= sig_s + 1;
+			else
+				sig_c <= 0;
+			end if;
+			
+			if sig_s > 1 then
+				sig_out <= '1';
+			else
+				sig_out <= '0';
+			end if;
+	end process;
 
+fr_start <= cs_b_fe;
+fr_end <= cs_b_re;
 fr_err <= sig_out;
 
 end Behavioral;
