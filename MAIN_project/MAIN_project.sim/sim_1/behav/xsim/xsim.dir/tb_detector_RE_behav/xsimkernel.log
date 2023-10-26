@@ -1,0 +1,7 @@
+Running: xsim.dir/tb_detector_RE_behav/xsimk.exe -simmode gui -wdb tb_detector_RE_behav.wdb -simrunnum 0 -socket 50335
+Design successfully loaded
+Design Loading Memory Usage: 12100 KB (Peak: 12100 KB)
+Design Loading CPU Usage: 61 ms
+Simulation completed
+Simulation Memory Usage: 12932 KB (Peak: 12932 KB)
+Simulation CPU Usage: 92 ms

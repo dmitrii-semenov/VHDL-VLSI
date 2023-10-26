@@ -1,0 +1,11 @@
+0.7
+2020.2
+May  7 2023
+15:24:31
+Z:/Documents/GitHub/VHDL-VLSI/src/ddf.vhd,1698339659,vhdl,Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd,,,ddf,,,,,,,,
+Z:/Documents/GitHub/VHDL-VLSI/src/detector_FE.vhd,1698234082,vhdl,Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd,,,detector_fe,,,,,,,,
+Z:/Documents/GitHub/VHDL-VLSI/src/detector_RE.vhd,1698234082,vhdl,Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd,,,detector_re,,,,,,,,
+Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd,1698339659,vhdl,Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd,,,frame_check,,,,,,,,
+Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd,1698339659,vhdl,,,,spi,,,,,,,,
+Z:/Documents/GitHub/VHDL-VLSI/tb/tb_detector_RE.vhd,1698234082,vhdl,,,,tb_detector_re,,,,,,,,
+Z:/Documents/GitHub/VHDL-VLSI/tb/tb_spi.vhd,1698339659,vhdl,,,,tb_spi,,,,,,,,
