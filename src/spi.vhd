@@ -32,6 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity spi is
     Port ( CLK : in  STD_LOGIC;
            CS_b : in  STD_LOGIC;
+           rst_b : in  STD_LOGIC;
            SCLK : in  STD_LOGIC;
            MOSI : in  STD_LOGIC;
            MISO : out  STD_LOGIC;
@@ -99,13 +100,14 @@ begin
 	frame_det : entity work.frame_check
 		port map (
 			clk => clk,
+			rst_b => rst_b,
 			sclk_re => sclk_re,
 			cs_b_re => cs_b_re,
 			cs_b_fe => cs_b_fe,
-         fr_en_b => cs_b_o,
+            fr_en_b => cs_b_o,
 			fr_start => fr_start,
 			fr_end => fr_end,
-         fr_err => fr_err
+            fr_err => fr_err
 		);
 
 end Behavioral;

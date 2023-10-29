@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -34,66 +35,46 @@ entity frame_check is
 			fr_LENGTH : natural := 16);
     Port ( clk : in  STD_LOGIC;
 			  sclk_re : in  STD_LOGIC;
+			  rst_b : in  STD_LOGIC;
 			  cs_b_re : in  STD_LOGIC;
 			  cs_b_fe : in  STD_LOGIC;
-           fr_en_b : in  STD_LOGIC;
+              fr_en_b : in  STD_LOGIC;
 			  fr_start : out  STD_LOGIC;
 			  fr_end : out  STD_LOGIC;
-           fr_err : out  STD_LOGIC);
+              fr_err : out  STD_LOGIC);
 end frame_check;
 
 architecture Behavioral of frame_check is
 
-signal sig_c : integer := 0;
-signal sig_s : integer := 0;
-
-signal sig_out : STD_LOGIC := '0';
+signal sig_c : STD_LOGIC_VECTOR(4 downto 0) := (others => '0');
 
 begin
---	p_sek : process (clk) begin
---		if rising_edge(clk) then
---			if sclk_re = '1' then
---				if fr_en_b = '0' then
---					sig_n <= sig_n + 1;
---				else
---					if sig_n = fr_LENGTH then
---						sig_out <= '0';
---					elsif sig_n = 0 then
---						sig_out <= '0';
---					else
---						sig_out <= '1';
---					end if;
---				sig_n <= 0;
---				end if;
---			end if;
---		end if;
---end process;
-
-	p_sek : process (clk) begin
-		if rising_edge(clk) then
-			if sclk_re = '1' then
-				sig_s <= sig_c;
-			end if;
+	p_sek: process(clk, rst_b) begin
+    if(rst_b = '0') then
+	   sig_c <= (others => '0');
+    elsif(rising_edge(clk)) then
+      if(fr_en_b = '0' and sclk_re = '1' and fr_err = '0') then
+		  sig_c <= sig_c + 1;
+		elsif(fr_en_b = '1') then
+        sig_c <= (others => '0');		
 		end if;
-	end process;
+    end if;	 
+  end process;
 	
-	p_komb : process(fr_en_b,sig_s) begin
-			if fr_en_b = '0' then
-				sig_c <= sig_s + 1;
-			else
-				sig_c <= 0;
-			end if;
-			
-			if sig_s > 1 then
-				sig_out <= '1';
-			else
-				sig_out <= '0';
-			end if;
-	end process;
+p_comb: process(fr_en_b, sig_c) begin
+   if((sig_c /= 0) and (fr_en_b = '1') and (sig_c < 16) ) then
+     fr_err <= '1';
+	elsif(sig_c > 16) then
+	  fr_err <= '1';
+	else
+	  fr_err <= '0';
+   end if;
+  end process;
 
-fr_start <= cs_b_fe;
-fr_end <= cs_b_re;
-fr_err <= sig_out;
+out_flags: process(rst_b, cs_b_fe, cs_b_re) begin
+      fr_start <= cs_b_re and rst_b;
+      fr_end   <= cs_b_fe and rst_b;
+  end process;
 
 end Behavioral;
 

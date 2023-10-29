@@ -1,10 +1,5 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/ddf.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'ddf'
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/detector_FE.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'detector_FE'
 INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd" into library xil_defaultlib
 INFO: [VRFC 10-3107] analyzing entity 'frame_check'
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'spi'
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/tb/tb_spi.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'tb_spi'
+ERROR: [VRFC 10-8820] cannot read from 'out' object 'fr_err'; use 'buffer' or 'inout' instead [Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd:56]
+ERROR: [VRFC 10-9458] unit 'behavioral' is ignored due to previous errors [Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd:47]
+INFO: [VRFC 10-8704] VHDL file 'Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd' is ignored due to errors

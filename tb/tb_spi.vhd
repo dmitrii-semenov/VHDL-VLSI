@@ -43,6 +43,7 @@ ARCHITECTURE behavior OF tb_spi IS
     PORT(
          CLK : IN  std_logic;
          CS_b : IN  std_logic;
+         rst_b : IN  std_logic;
          SCLK : IN  std_logic;
          MOSI : IN  std_logic;
          MISO : OUT  std_logic;
@@ -59,6 +60,7 @@ ARCHITECTURE behavior OF tb_spi IS
    --Inputs
    signal CLK : std_logic := '0';
    signal CS_b : std_logic := '0';
+   signal rst_b : std_logic := '0';
    signal SCLK : std_logic := '0';
    signal MOSI : std_logic := '0';
    signal data_in : std_logic_vector(7 downto 0) := (others => '0');
@@ -81,6 +83,7 @@ BEGIN
    uut: spi PORT MAP (
           CLK => CLK,
           CS_b => CS_b,
+          rst_b => rst_b,
           SCLK => SCLK,
           MOSI => MOSI,
           MISO => MISO,
@@ -112,7 +115,11 @@ BEGIN
 
    -- Stimulus process
    stim_proc: process
-   begin	
+   begin
+        rst_b <= '0';
+        wait for 20ns;
+        
+        rst_b <= '1';	
 		CS_b <= '1';
 		wait for 20 ns;
 		
