@@ -1,0 +1,43 @@
+
+*** Running vivado
+    with args -log spi.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source spi.tcl
+
+
+Режим вывода команд на экран (ECHO) отключен.
+Режим вывода команд на экран (ECHO) отключен.
+
+****** Vivado v2023.1 (64-bit)
+  **** SW Build 3865809 on Sun May  7 15:05:29 MDT 2023
+  **** IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+  **** SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source spi.tcl -notrace
+create_project: Time (s): cpu = 00:00:18 ; elapsed = 00:00:22 . Memory (MB): peak = 500.379 ; gain = 204.262
+Command: synth_design -top spi -part xc7a100tcsg324-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100t'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 2456
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 938.211 ; gain = 412.938
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'spi' [Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd:47]
+INFO: [Synth 8-638] synthesizing module 'ddf' [Z:/Documents/GitHub/VHDL-VLSI/src/ddf.vhd:39]
+WARNING: [Synth 8-614] signal 'rst' is read in the process but is not in the sensitivity list [Z:/Documents/GitHub/VHDL-VLSI/src/ddf.vhd:45]
+INFO: [Synth 8-256] done synthesizing module 'ddf' (0#1) [Z:/Documents/GitHub/VHDL-VLSI/src/ddf.vhd:39]
+INFO: [Synth 8-638] synthesizing module 'detector_RE' [Z:/Documents/GitHub/VHDL-VLSI/src/detector_RE.vhd:39]
+WARNING: [Synth 8-614] signal 'rst' is read in the process but is not in the sensitivity list [Z:/Documents/GitHub/VHDL-VLSI/src/detector_RE.vhd:45]
+INFO: [Synth 8-256] done synthesizing module 'detector_RE' (0#1) [Z:/Documents/GitHub/VHDL-VLSI/src/detector_RE.vhd:39]
+INFO: [Synth 8-638] synthesizing module 'detector_FE' [Z:/Documents/GitHub/VHDL-VLSI/src/detector_FE.vhd:39]
+WARNING: [Synth 8-614] signal 'rst' is read in the process but is not in the sensitivity list [Z:/Documents/GitHub/VHDL-VLSI/src/detector_FE.vhd:45]
+INFO: [Synth 8-256] done synthesizing module 'detector_FE' (0#1) [Z:/Documents/GitHub/VHDL-VLSI/src/detector_FE.vhd:39]
+INFO: [Synth 8-638] synthesizing module 'frame_check' [Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd:47]
+WARNING: [Synth 8-614] signal 'fr_err_c' is read in the process but is not in the sensitivity list [Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd:76]
+INFO: [Synth 8-256] done synthesizing module 'frame_check' (0#1) [Z:/Documents/GitHub/VHDL-VLSI/src/frame_check.vhd:47]
+INFO: [Synth 8-256] done synthesizing module 'spi' (0#1) [Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd:47]
+WARNING: [Synth 8-3848] Net MISO in module/entity spi does not have driver. [Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd:38]
+WARNING: [Synth 8-3848] Net data_out in module/entity spi does not have driver. [Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd:42]

@@ -31,8 +31,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity detector_FE is
     Port ( clk : in  STD_LOGIC;
-           sig_in : in  STD_LOGIC;
-           sig_out : out  STD_LOGIC);
+           rst : in  STD_LOGIC;
+           det_in : in  STD_LOGIC;
+           det_out : out  STD_LOGIC);
 end detector_FE;
 
 architecture Behavioral of detector_FE is
@@ -42,13 +43,15 @@ signal sig_Q : std_logic;
 begin
 
 p_dff : process (clk) begin
-	if rising_edge(clk) then
-		sig_Q <= sig_in;
+    if (rst = '1') then
+        sig_Q <= '0';
+	elsif rising_edge(clk) then
+		sig_Q <= det_in;
 	end if;
 end process;
 
-p_cnr : process (sig_in, sig_Q) begin
-	sig_out <=  (not sig_in) and (sig_in xor sig_Q);
+p_cnr : process (det_in, sig_Q) begin
+	det_out <=  (not det_in) and (det_in xor sig_Q);
 end process;
 
 end Behavioral;

@@ -35,7 +35,7 @@ entity frame_check is
 			fr_LENGTH : natural := 16);
     Port ( clk : in  STD_LOGIC;
 			  sclk_re : in  STD_LOGIC;
-			  rst_b : in  STD_LOGIC;
+			  rst : in  STD_LOGIC;
 			  cs_b_re : in  STD_LOGIC;
 			  cs_b_fe : in  STD_LOGIC;
               fr_en_b : in  STD_LOGIC;
@@ -46,35 +46,38 @@ end frame_check;
 
 architecture Behavioral of frame_check is
 
-signal sig_c : STD_LOGIC_VECTOR(4 downto 0) := (others => '0');
+signal sig_c : integer := 0;
+signal fr_err_c : STD_LOGIC := '0';
 
 begin
-	p_sek: process(clk, rst_b) begin
-    if(rst_b = '0') then
-	   sig_c <= (others => '0');
+
+	p_sek: process(clk, rst) begin
+    if(rst = '1') then
+	   sig_c <= 0;
     elsif(rising_edge(clk)) then
-      if(fr_en_b = '0' and sclk_re = '1' and fr_err = '0') then
+      if(fr_en_b = '0' and sclk_re = '1' and fr_err_c = '0') then
 		  sig_c <= sig_c + 1;
 		elsif(fr_en_b = '1') then
-        sig_c <= (others => '0');		
+        sig_c <= 0;		
 		end if;
     end if;	 
   end process;
 	
-p_comb: process(fr_en_b, sig_c) begin
-   if((sig_c /= 0) and (fr_en_b = '1') and (sig_c < 16) ) then
-     fr_err <= '1';
-	elsif(sig_c > 16) then
-	  fr_err <= '1';
-	else
-	  fr_err <= '0';
-   end if;
-  end process;
+    p_comb: process(fr_en_b, sig_c) begin
+       if((sig_c /= 0) and (fr_en_b = '1') and (sig_c < fr_LENGTH) ) then
+         fr_err_c <= '1';
+        elsif(sig_c > fr_LENGTH) then
+          fr_err_c <= '1';
+        else
+          fr_err_c <= '0';
+       end if;
+      end process;
 
-out_flags: process(rst_b, cs_b_fe, cs_b_re) begin
-      fr_start <= cs_b_re and rst_b;
-      fr_end   <= cs_b_fe and rst_b;
-  end process;
+    out_flags: process(rst, cs_b_fe, cs_b_re) begin
+          fr_start <= cs_b_fe and (not rst);
+          fr_end   <= cs_b_re and (not rst);
+          fr_err <= fr_err_c and (not rst);
+      end process;
 
 end Behavioral;
 

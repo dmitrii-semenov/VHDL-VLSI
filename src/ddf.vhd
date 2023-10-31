@@ -32,6 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity ddf is
     Port ( input : in  STD_LOGIC;
            clk : in  STD_LOGIC;
+           rst : in  STD_LOGIC;
            output : out  STD_LOGIC);
 end ddf;
 
@@ -42,7 +43,10 @@ signal sig_betw : STD_LOGIC;
 begin
 
 	p: process(clk) begin
-		if rising_edge(clk) then
+        if (rst = '1') then
+           sig_betw <= '0';
+           output <= '0';
+		elsif rising_edge(clk) then
 			sig_betw <= input;
 			output <= sig_betw;
 		end if;
