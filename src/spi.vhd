@@ -30,6 +30,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity spi is
+	 generic (
+			g_WIDTH : natural := 16);
     Port ( CLK : in  STD_LOGIC;
            CS_b : in  STD_LOGIC;
            rst : in  STD_LOGIC;
@@ -39,9 +41,9 @@ entity spi is
            fr_start : out  STD_LOGIC;
            fr_end : out  STD_LOGIC;
            fr_err : out  STD_LOGIC;
-           data_out : out  STD_LOGIC_VECTOR (7 downto 0);
-           data_in : in  STD_LOGIC_VECTOR (7 downto 0);
-           data_load : in  STD_LOGIC);
+           data_out : out  STD_LOGIC_VECTOR (g_WIDTH - 1 downto 0);
+           data_in : in  STD_LOGIC_VECTOR (g_WIDTH - 1 downto 0);
+           load_data : in  STD_LOGIC);
 end spi;
 
 architecture Behavioral of spi is
@@ -52,6 +54,9 @@ signal cs_b_o : STD_LOGIC;
 signal sclk_re : STD_LOGIC;
 signal sclk_fe : STD_LOGIC;
 signal sclk_o : STD_LOGIC;
+signal MOSI_o : STD_LOGIC;
+signal deser_en : STD_LOGIC;
+signal ser_en : STD_LOGIC;
 
 begin
 
@@ -60,7 +65,7 @@ begin
 			clk => clk,
 			rst => rst,
 			input => CS_b,
-			output => cs_b_o
+			output => CS_b_o
 		);
 		
 	sclk_dff : entity work.ddf
@@ -71,11 +76,19 @@ begin
 			output => sclk_o
 		);
 		
+	MOSI_dff : entity work.ddf
+		port map (
+			clk => clk,
+			rst => rst,
+			input => MOSI,
+			output => MOSI_o
+		);
+		
 	cs_R : entity work.detector_RE
 		port map (
 			clk => clk,
 			rst => rst,
-			det_in => cs_b_o,
+			det_in => CS_b_o,
 			det_out => cs_b_re
 		);
 		
@@ -83,7 +96,7 @@ begin
 		port map (
 			clk => clk,
 			rst => rst,
-			det_in => cs_b_o,
+			det_in => CS_b_o,
 			det_out => cs_b_fe
 		);
 		
@@ -110,11 +123,37 @@ begin
 			sclk_re => sclk_re,
 			cs_b_re => cs_b_re,
 			cs_b_fe => cs_b_fe,
-            fr_en_b => cs_b_o,
+         fr_en_b => CS_b_o,
 			fr_start => fr_start,
 			fr_end => fr_end,
-            fr_err => fr_err
+         fr_err => fr_err
 		);
+	
+	deserializer : entity work.deserializer
+		generic map (
+			g_WIDTH => g_WIDTH
+		)
+		port map (
+			data => data_out,
+         shift_en => deser_en,
+         rst => rst,
+         clk => clk,
+         stream => MOSI_o
+		);
+	deser_en <= sclk_re and (not CS_b_o);
+	
+	serializer : entity work.serializer
+		generic map (
+			g_WIDTH => g_WIDTH
+		)
+		port map (
+			data => data_in,
+         shift_en => ser_en,
+         rst => rst,
+			load_en => load_data,
+         clk => clk,
+         stream => MISO
+		);
+	ser_en <= sclk_fe and (not CS_b_o);
 
 end Behavioral;
-

@@ -61,12 +61,13 @@ p_comb : process (load_en,shift_en, data, sig_D, sig_Q) begin
 	if load_en = '1' then
 		sig_D <= data;
 	elsif shift_en = '1' then
-		sig_D(0) <= '0';
+		sig_Q <= sig_D;
 		for idx in 0 to (g_WIDTH - 2) loop
 			sig_D(idx+1) <= sig_Q(idx);
 		end loop;
-	else
-		sig_D <= sig_Q;
+		sig_D(0) <= '0';
+	--else
+	--	sig_D <= sig_Q;
 	end if;
 end process;
 

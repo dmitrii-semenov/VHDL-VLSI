@@ -55,4 +55,3 @@ p_cnr : process (det_in, sig_Q) begin
 end process;
 
 end Behavioral;
-
