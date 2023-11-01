@@ -47,12 +47,12 @@ ARCHITECTURE behavior OF tb_spi IS
          SCLK : IN  std_logic;
          MOSI : IN  std_logic;
          MISO : OUT  std_logic;
-		 fr_end : OUT  STD_LOGIC;
+		   fr_end : OUT  STD_LOGIC;
          fr_start : OUT  std_logic;
          fr_err : OUT  std_logic;
-         data_out : OUT  std_logic_vector(7 downto 0);
-         data_in : IN  std_logic_vector(7 downto 0);
-         data_load : IN  std_logic
+         data_out : OUT  std_logic_vector(15 downto 0);
+         data_in : IN  std_logic_vector(15 downto 0);
+         load_data : IN  std_logic
         );
     END COMPONENT;
     
@@ -63,15 +63,15 @@ ARCHITECTURE behavior OF tb_spi IS
    signal rst : std_logic := '0';
    signal SCLK : std_logic := '0';
    signal MOSI : std_logic := '0';
-   signal data_in : std_logic_vector(7 downto 0) := (others => '0');
-   signal data_load : std_logic := '0';
+   signal data_in : std_logic_vector(15 downto 0) := (others => '0');
+   signal load_data : std_logic := '0';
 
  	--Outputs
    signal MISO : std_logic;
    signal fr_start : std_logic;
    signal fr_end : std_logic;
    signal fr_err : std_logic;
-   signal data_out : std_logic_vector(7 downto 0);
+   signal data_out : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
    constant CLK_period : time := 1 ns;
@@ -92,7 +92,7 @@ BEGIN
           fr_err => fr_err,
           data_out => data_out,
           data_in => data_in,
-          data_load => data_load
+          load_data => load_data
         );
 
    -- Clock process definitions
@@ -117,15 +117,54 @@ BEGIN
    stim_proc: process
    begin
         rst <= '1';
+		  MOSI <= '0';
         wait for 20ns;
         
         rst <= '0';	
 		CS_b <= '1';
 		wait for 20 ns;
-		
+		--start send first 16bit number 0110111011101011
+		load_data <= '1';
+		data_in <= "1001101101111001";
+		wait for 10 ns;
+		load_data <= '0';
 		CS_b <= '0';
-		wait for 160 ns;
 		
+		MOSI <= '0';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '0';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '0';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '0';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '0';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		MOSI <= '1';
+		wait for 10 ns;
+		-- end number transfer
+		
+		MOSI <= '0';
 		CS_b <= '1';
 		wait for 50 ns;
 		
