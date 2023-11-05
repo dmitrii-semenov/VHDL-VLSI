@@ -1,4 +1,4 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/ddf.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'ddf'
+INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/serializer.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'serializer'
 INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd" into library xil_defaultlib
 INFO: [VRFC 10-3107] analyzing entity 'spi'

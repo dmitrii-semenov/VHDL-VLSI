@@ -17,6 +17,8 @@ Compiling architecture behavioral of entity xil_defaultlib.ddf [ddf_default]
 Compiling architecture behavioral of entity xil_defaultlib.detector_RE [detector_re_default]
 Compiling architecture behavioral of entity xil_defaultlib.detector_FE [detector_fe_default]
 Compiling architecture behavioral of entity xil_defaultlib.frame_check [frame_check_default]
+Compiling architecture behavioral of entity xil_defaultlib.deserializer [deserializer_default]
+Compiling architecture behavioral of entity xil_defaultlib.serializer [serializer_default]
 Compiling architecture behavioral of entity xil_defaultlib.spi [spi_default]
 Compiling architecture behavior of entity xil_defaultlib.tb_spi
 Built simulation snapshot tb_spi_behav

@@ -30,11 +30,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity serializer is
-	generic (
-			g_WIDTH : natural := 4);
-   Port ( data : in  STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0);
+   Port ( data : in  STD_LOGIC_VECTOR (15 downto 0);
            load_en : in  STD_LOGIC;
-           shift_en : in  STD_LOGIC;
+           shift_en_b : in  STD_LOGIC;
+           sclk_re : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
            stream : out  STD_LOGIC);
@@ -42,36 +41,30 @@ end serializer;
 
 architecture Behavioral of serializer is
 
-signal sig_D : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0);
-signal sig_Q : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0);
+signal reg : STD_LOGIC_VECTOR (15 downto 0);
 
 begin
 
-p_sek : process (clk) begin
-	if rising_edge(clk) then
+process (clk) begin 
 		if rst = '1' then
-			sig_Q <= (others => '0');
-		else
-			sig_Q <= sig_D;
+			reg <= (others => '0');
+			stream <= '0';
+		elsif rising_edge(clk) then
+		  if (shift_en_b = '0' and sclk_re = '1' and load_en = '0')  then
+		      reg(14 downto 0) <= reg(15 downto 1);
+		      reg(15) <= '0';
+		  end if;
 		end if;
-	end if;
 end process;
 
-p_comb : process (load_en,shift_en, data, sig_D, sig_Q) begin
-	if load_en = '1' then
-		sig_D <= data;
-	elsif shift_en = '1' then
-		sig_Q <= sig_D;
-		for idx in 0 to (g_WIDTH - 2) loop
-			sig_D(idx+1) <= sig_Q(idx);
-		end loop;
-		sig_D(0) <= '0';
-	--else
-	--	sig_D <= sig_Q;
-	end if;
+process (reg, load_en, shift_en_b) begin
+    if load_en = '1' then
+        reg <= data;
+    elsif shift_en_b = '0' then
+        stream <= reg(0);
+    else
+        stream <= '0';
+    end if;
 end process;
-
-stream <= sig_Q(g_WIDTH - 1);
 
 end Behavioral;
-

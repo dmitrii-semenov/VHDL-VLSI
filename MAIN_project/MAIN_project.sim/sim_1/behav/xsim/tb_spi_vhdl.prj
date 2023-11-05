@@ -1,9 +1,11 @@
 # compile vhdl design source files
 vhdl xil_defaultlib  \
 "../../../../../src/ddf.vhd" \
+"../../../../../src/deserializer.vhd" \
 "../../../../../src/detector_FE.vhd" \
 "../../../../../src/detector_RE.vhd" \
 "../../../../../src/frame_check.vhd" \
+"../../../../../src/serializer.vhd" \
 "../../../../../src/spi.vhd" \
 "../../../../../tb/tb_spi.vhd" \
 
