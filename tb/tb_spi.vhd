@@ -166,7 +166,12 @@ BEGIN
 		
 		MOSI <= '0';
 		CS_b <= '1';
-		wait for 50 ns;
+		wait for 20 ns;
+		load_data <= '1';
+		data_in <= "1110001011100111";
+		wait for 10 ns;
+		load_data <= '0';
+		wait for 20 ns;
 		
 		CS_b <= '0';
 		wait for 200 ns;

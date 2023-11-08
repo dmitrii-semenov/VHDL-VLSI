@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,41 +31,56 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity serializer is
-   Port ( data : in  STD_LOGIC_VECTOR (15 downto 0);
-           load_en : in  STD_LOGIC;
-           shift_en_b : in  STD_LOGIC;
-           sclk_re : in  STD_LOGIC;
-           rst : in  STD_LOGIC;
-           clk : in  STD_LOGIC;
-           stream : out  STD_LOGIC);
+	generic (
+		g_WIDTH : natural := 16);
+   Port ( 
+		data : in  STD_LOGIC_VECTOR (g_WIDTH-1 downto 0);
+		load_en : in  STD_LOGIC;
+		shift_en : in  STD_LOGIC;
+		rst : in  STD_LOGIC;
+		clk : in  STD_LOGIC;
+		stream : out  STD_LOGIC;
+		stream_en : in  STD_LOGIC);
 end serializer;
 
 architecture Behavioral of serializer is
 
-signal reg : STD_LOGIC_VECTOR (15 downto 0);
-
+signal sig_Q_in : STD_LOGIC := '0';
+signal sig_reg_out : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0) := (others => '0');
+signal sig_reg_in : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0) := (others => '0');
+signal sig_Q_out : STD_LOGIC :='0';
+signal sig_x_in : natural range 0 to 15 := 0;
+signal sig_x_out : natural range 0 to 15 := 0;
 begin
 
-process (clk) begin 
+p_seq: process (clk) begin 
+	if rising_edge(clk) then
 		if rst = '1' then
-			reg <= (others => '0');
-			stream <= '0';
-		elsif rising_edge(clk) then
-		  if (shift_en_b = '0' and sclk_re = '1' and load_en = '0')  then
-		      reg(14 downto 0) <= reg(15 downto 1);
-		      reg(15) <= '0';
-		  end if;
+			--0
+		else
+			sig_reg_out <= sig_reg_in;
+			sig_Q_out <= sig_Q_in;
 		end if;
+	end if;
 end process;
 
-process (reg, load_en, shift_en_b) begin
-    if load_en = '1' then
-        reg <= data;
-    elsif shift_en_b = '0' then
-        stream <= reg(0);
-    else
-        stream <= '0';
-    end if;
+
+
+p_comb: process (shift_en, load_en, sig_Q_out, sig_Q_in, sig_x_out, sig_reg_out, stream_en) begin
+	if load_en = '1' then --load data
+		sig_reg_in <= data;
+		sig_Q_in <= '0';
+	elsif stream_en = '1' then
+		sig_Q_in <= '0';
+	elsif shift_en = '1' then
+		sig_reg_in <= '0' & sig_reg_out(15 downto 1);
+		sig_Q_in <= sig_reg_out(0);
+	else
+		sig_reg_in <= sig_reg_out;
+		sig_Q_in <= sig_Q_out;
+	end if;
 end process;
+
+stream <= sig_Q_out;
 
 end Behavioral;

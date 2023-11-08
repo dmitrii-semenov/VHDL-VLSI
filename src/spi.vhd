@@ -130,25 +130,30 @@ begin
 		);
 	
 	deserializer : entity work.deserializer
+		generic map (
+			g_WIDTH => g_WIDTH
+		)
 		port map (
-		 data => data_out,
-         shift_en_b => CS_b_o,
+			data => data_out,
+         shift_en => deser_en,
          rst => rst,
          clk => clk,
-         cs_b_re => cs_b_re,
-         sclk_re => sclk_re,
          stream => MOSI_o
 		);
+	deser_en <= sclk_re and (not CS_b_o);
 	
 	serializer : entity work.serializer
+		generic map (
+			g_WIDTH => g_WIDTH
+		)
 		port map (
-		 data => data_in,
-         shift_en_b => CS_b_o,
+			data => data_in,
+         shift_en => sclk_fe,
          rst => rst,
-		 load_en => load_data,
-		 sclk_re => sclk_re,
+			load_en => load_data,
          clk => clk,
-         stream => MISO
+         stream => MISO,
+			stream_en => CS_b_o
 		);
 
 end Behavioral;

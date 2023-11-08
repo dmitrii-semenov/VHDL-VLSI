@@ -30,41 +30,43 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity deserializer is
-   Port ( data : out  STD_LOGIC_VECTOR (15 downto 0);
-           shift_en_b : in  STD_LOGIC;
+	generic (
+			g_WIDTH : natural := 4);
+   Port ( data : out  STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0);
+           shift_en : in  STD_LOGIC;
            rst : in  STD_LOGIC;
            clk : in  STD_LOGIC;
-           cs_b_re : in STD_LOGIC;
-           sclk_re : in  STD_LOGIC;
            stream : in  STD_LOGIC);
 end deserializer;
 
 architecture Behavioral of deserializer is
 
-signal reg : STD_LOGIC_VECTOR (15 downto 0);
+signal sig_D : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0);
+signal sig_Q : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0);
 
 begin
 
-process (clk) begin 
-		if rst = '1' then
-			reg <= (others => '0');
-		elsif rising_edge(clk) then
-		  if (shift_en_b = '0' and sclk_re = '1')  then
-		      reg(15) <= stream;
-		      reg(14 downto 0) <= reg(15 downto 1);
-		  end if;
+p_sek : process (clk) begin -- D flip-flop operation process
+	if rising_edge(clk) then
+		if rst = '1' then -- reset output of all D FF if rst == 1
+			sig_Q <= (others => '0');
+		else
+			sig_Q <= sig_D; -- D FF normal function mode(input transfer to the output with every tising edge of 'clk')
 		end if;
+	end if;
 end process;
 
-process (clk, rst, reg, cs_b_re) begin
-    if rst = '1' then
-        data <= (others => '0');
-    elsif rising_edge(clk) then
-        if cs_b_re = '1' then
-            data <= reg;
-        end if; 
-    end if;
+p_comb : process (shift_en, stream, sig_D, sig_Q) begin	-- Combination logic process
+	if shift_en = '1' then	-- Mode with shifting input data to the variable "sig_D"(later assigned to the output "data")
+		sig_D(0) <= stream;
+		for idx in 0 to (g_WIDTH - 2) loop -- shifting all bits in vector sig_D to one position to the MSB
+			sig_D(idx+1) <= sig_Q(idx);
+		end loop;
+	else
+		sig_D <= sig_Q; -- Mode with '0' enable signal, output vector value is unchanged, mode of "keeping" value on the output
+	end if;
 end process;
 
+data <= sig_Q; -- assigning sig_Q value to the output vector "data"
 
 end Behavioral;
