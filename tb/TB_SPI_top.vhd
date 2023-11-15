@@ -193,6 +193,7 @@ miso_process :process
      wait for 100 ns;
      rst <= '0';
 	  wait for 10 ns;
+	  
      SCLK_period <= 10 ns;
      frame_width <= 16;
      task_send_frame(clk,miso_data,rst,CS_b,mosi_data);
