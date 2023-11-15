@@ -7,7 +7,7 @@ vhdl xil_defaultlib  \
 "../../../../../src/frame_check.vhd" \
 "../../../../../src/serializer.vhd" \
 "../../../../../src/spi.vhd" \
-"../../../../../tb/tb_spi.vhd" \
+"../../../../MAIN_project.srcs/sim_1/new/TB_SPI_top.vhd" \
 
 # Do not sort compile order
 nosort

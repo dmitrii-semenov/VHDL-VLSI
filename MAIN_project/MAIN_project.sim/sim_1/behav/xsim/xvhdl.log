@@ -1,2 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/spi.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'spi'
+INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/MAIN_project/MAIN_project.srcs/sim_1/new/TB_SPI_top.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'TB_SPI_top'
