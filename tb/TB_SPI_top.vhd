@@ -44,7 +44,7 @@ COMPONENT spi
          SCLK : IN  std_logic;
          MOSI : IN  std_logic;
          MISO : OUT  std_logic;
-		 fr_end : OUT  STD_LOGIC;
+		   fr_end : OUT  STD_LOGIC;
          fr_start : OUT  std_logic;
          fr_err : OUT  std_logic;
          data_out : OUT  std_logic_vector(15 downto 0);
@@ -87,23 +87,25 @@ COMPONENT spi
                              signal rst : out STD_LOGIC;
                              signal CS_b : out STD_LOGIC;
                              signal mosi_data : out STD_LOGIC_VECTOR(15 downto 0)
-                             ) is begin
-    -- RST
-    wait for 100 ns;
-    rst <= '1';
-    wait for 100 ns;
-    rst <= '0';
-    
-    -- send first number: 9.125
-    mosi_data  <= "0000100100100000"; --9.125		
+                             ) is begin  
+    -- send first number:
+    mosi_data  <= "1100100100100001";	
     CS_b       <= '0';
 	wait until frame_end = '1';
 	wait for   sclk_period*3;
 	CS_b       <= '1';
 	wait for   sclk_period*4;
 	
-	-- send second number: 9.0585938
-	mosi_data  <= "0000100100001111"; --9.0585938		
+	-- send second number
+	mosi_data  <= "1110100100001111"; 	
+    CS_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*3;
+	CS_b       <= '1';
+	wait for   sclk_period*4;
+	
+	-- send third number: 0
+	mosi_data  <= "0000000000000000"; --0		
     CS_b       <= '0';
 	wait until frame_end = '1';
 	wait for   sclk_period*3;
@@ -185,6 +187,12 @@ miso_process :process
  testcase :process
  begin
  
+     -- RST
+     wait for 100 ns;
+     rst <= '1';
+     wait for 100 ns;
+     rst <= '0';
+	  wait for 10 ns;
      SCLK_period <= 10 ns;
      frame_width <= 16;
      task_send_frame(clk,miso_data,rst,CS_b,mosi_data);
