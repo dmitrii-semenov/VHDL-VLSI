@@ -19,6 +19,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -56,6 +57,7 @@ type state_type is (s0,s1,s2,s3,s4);
 -- s4: wait for first frame 
 signal next_state : state_type;
 signal present_state : state_type;
+signal time_1ms_cnt : STD_LOGIC_VECTOR(15 downto 0);
 signal frame_num : STD_LOGIC; -- '0' first frame, '1' - second
 signal time_flag : STD_LOGIC; -- send time error(REQ_ AAU_I_023)
 
@@ -142,6 +144,40 @@ begin
 		we_data_fr2 <= '0';
 	end if;
 end process;
+
+-- Timer for REQ_AAU_I_023 (1ms)
+process(clk, rst) 
+begin
+    if(rst = '1') then
+      time_1ms_cnt <= (others => '0');
+    elsif(rising_edge(clk)) then
+	   if(present_state = s2) then
+		  time_1ms_cnt <= time_1ms_cnt + 1;
+		else
+		  time_1ms_cnt <= (others => '0');
+		end if;
+		if(time_1ms_cnt = 50000) then
+		  time_flag <= '1';
+		else
+		  time_flag <= '0';
+		end if;
+    end if;		
+end process;  
+  
+-- Multiplexer(driving data from AAU)
+process(clk, rst) 
+begin
+    if(rst = '1') then
+      data_in <= (others => '0');
+    elsif(rising_edge(clk)) then
+	   if(present_state = s4) then
+	       data_in <= add_res;
+	   end if;
+	   if(present_state = s2) then
+	       data_in <= mul_res;
+	   end if;
+    end if;		
+end process; 
 
 end Behavioral;
 

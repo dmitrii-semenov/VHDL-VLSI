@@ -58,9 +58,9 @@ end process;
 
 p_comb : process (shift_en, stream, sig_D, sig_Q) begin	-- Combination logic process
 	if shift_en = '1' then	-- Mode with shifting input data to the variable "sig_D"(later assigned to the output "data")
-		sig_D(0) <= stream;
+		sig_D(g_WIDTH-1) <= stream;
 		for idx in 0 to (g_WIDTH - 2) loop -- shifting all bits in vector sig_D to one position to the MSB
-			sig_D(idx+1) <= sig_Q(idx);
+			sig_D(g_WIDTH-2-idx) <= sig_Q(g_WIDTH-1-idx);
 		end loop;
 	else
 		sig_D <= sig_Q; -- Mode with '0' enable signal, output vector value is unchanged, mode of "keeping" value on the output
