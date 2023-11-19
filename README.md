@@ -47,4 +47,10 @@ Block diagram for `arithm_unit`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arit.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arit.jpg)
 
-This block
+This block performs addition and multiplication operations. The result is rounded (REQ_AAU_F_012) and overflow detection is included (REQ_AAU_F_013). These two arithmetic operations are performed at the same time and results are sent to the output pins back to the `pkt_ctrl` module.  To make sure that all operations are synchronous, a D-type FF is connected to the inputs and outputs.  
+
+## Source files
+
+All source files (VHDL architecture) are located in [this](https://github.com/dmitrii-semenov/VHDL-VLSI/tree/main/src) folder
+
+All simulation files (in VHDL) are located in [this](https://github.com/dmitrii-semenov/VHDL-VLSI/tree/main/tb) folder
