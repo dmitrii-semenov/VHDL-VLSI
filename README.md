@@ -26,6 +26,11 @@ In [Requirement Specification](https://github.com/dmitrii-semenov/VHDL-VLSI/blob
 ## Hardware description
 
 Block diagram for `dig_top`:
+
+![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/dig_top.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/dig_top.jpg)
+
+This block
+
 Block diagram for `spi_if`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/spi.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/spi.jpg)
