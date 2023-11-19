@@ -29,7 +29,7 @@ Block diagram for `dig_top`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/top.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/top.jpg)
 
-This block consists of 3 sub-blocks, which are `spi_if` (SPI Interface), `pkt_ctrl` (Packet Control) and `arithm_unit` (Arithmetic Unit). Each separate block is described below.
+This block consists of 3 sub-blocks, which are `spi_if` (SPI Interface), `pkt_ctrl` (Packet Control) and `arithm_unit` (Arithmetic Unit). Each separate block is described below. Once `CS_b` is set to 0, a data packet transfer is enabled. with every tick of `SCLK`, one bit of input data is sent via the `MOSI` input pin. After two numbers are sent, on the next `CS_b` signal result data will be received via the `MISO` output pin. The number format is defined by REQ_AAU_F_011 and bit sequency is defined by REQ_AAU_I_021.
 
 Block diagram for `spi_if`:
 
