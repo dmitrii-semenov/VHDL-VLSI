@@ -27,7 +27,7 @@ In [Requirement Specification](https://github.com/dmitrii-semenov/VHDL-VLSI/blob
 
 Block diagram for `dig_top`:
 
-![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/dig_top.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/dig_top.jpg)
+![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/top.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/top.jpg)
 
 This block
 
