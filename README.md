@@ -29,7 +29,7 @@ Block diagram for `dig_top`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/top.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/top.jpg)
 
-This block
+This block consists of 3 sub-blocks, which are `spi_if` (SPI Interface), `pkt_ctrl` (Packet Control) and `arithm_unit` (Arithmetic Unit). Each separate block is described below.
 
 Block diagram for `spi_if`:
 
