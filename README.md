@@ -27,6 +27,11 @@ In [Requirement Specification](https://github.com/dmitrii-semenov/VHDL-VLSI/blob
 
 Block diagram for `dig_top`:
 Block diagram for `spi_if`:
+
+![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/spi.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/spi.jpg)
+
+This block
+
 Block diagram for `pkt_ctrl`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/pkt.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/pkt.jpg)
