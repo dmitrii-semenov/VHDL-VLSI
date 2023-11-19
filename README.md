@@ -35,13 +35,13 @@ Block diagram for `spi_if`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/spi.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/spi.jpg)
 
-This block
+This block processes input data and sends data to the next block. On the input pins, there is a `DFF` (Double D Flip-Flop) to ensure glitchless input signals. Error of input data performed by the "Frame detection & check" block. MOSI (Master Output Slave Input) and MISO (Master Input Slave Output) are connected to the shift registers to keep the input data vectors in the appropriate format for further processing.
 
 Block diagram for `pkt_ctrl`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/pkt.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/pkt.jpg)
 
-This block
+This block is made by a Finite State Machine (FSM) to process the input data and send them to the Arithmetic Unit (AU). Also, this unit sends the results the result of addition and multiplication from the AU to the SPI Interface. The sequence is defined by the requirement REQ_AAU_I_024. In addition, `pkt_ctrl` counts the time interval between sending two frames, so if it is longer than 1 ms, the packet is considered invalid (REQ_AAU_I_023).
 
 Block diagram for `arithm_unit`:
 
