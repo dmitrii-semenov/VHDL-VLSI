@@ -30,6 +30,6 @@ Block diagram for `spi_if`:
 Block diagram for `pkt_ctrl`:
 Block diagram for `arithm_unit`:
 
-![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arithm.png](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arithm.png)
+![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arit.jpg](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arit.jpg)
 
 This block
