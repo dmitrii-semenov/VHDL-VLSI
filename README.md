@@ -31,3 +31,5 @@ Block diagram for `pkt_ctrl`:
 Block diagram for `arithm_unit`:
 
 ![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arithm.png](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arithm.png)
+
+This block
