@@ -22,3 +22,12 @@ In [Requirement Specification](https://github.com/dmitrii-semenov/VHDL-VLSI/blob
 * Verification environment
 * Results of implementation
 * Documentation
+
+## Hardware description
+
+Block diagram for `dig_top`:
+Block diagram for `spi_if`:
+Block diagram for `pkt_ctrl`:
+Block diagram for `arithm_unit`:
+
+![https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arithm.png](https://github.com/dmitrii-semenov/VHDL-VLSI/blob/main/Documents/arithm.png)
