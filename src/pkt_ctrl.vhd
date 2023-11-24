@@ -50,11 +50,10 @@ end pkt_ctrl;
 architecture Behavioral of pkt_ctrl is
 
 type state_type is (s0,s1,s2,s3,s4);
--- s0: state after reset or frame error 
+-- s0: wait for first frame 
 -- s1: receive first frame
 -- s2: wait for second frame
 -- s3: receive second frame
--- s4: wait for first frame 
 signal next_state : state_type;
 signal present_state : state_type;
 signal time_1ms_cnt : STD_LOGIC_VECTOR(15 downto 0);
@@ -109,17 +108,9 @@ begin
 			if fr_err = '1' then
 				next_state <= s0;
 			elsif fr_end = '1' then
-				next_state <= s4;
+				next_state <= s1;
 			else 
 				next_state <= s3;
-			end if;
-		
-		when s4 =>
-			if fr_start = '1' then
-				next_state <= s1;
-				frame_num <= '0';
-			else
-				next_state <= s4;
 			end if;
 		
 	end case;
@@ -138,7 +129,7 @@ end process;
 -- Enable frame 2 data write 
 process(present_state)
 begin
-	if (present_state = s4) and (frame_num = '1') then
+	if (present_state = s0) and (frame_num = '1') then
 		we_data_fr2 <= '1';
 	else 
 		we_data_fr2 <= '0';
@@ -170,7 +161,7 @@ begin
     if(rst = '1') then
       data_in <= (others => '0');
     elsif(rising_edge(clk)) then
-	   if(present_state = s4) then
+	   if(present_state = s0) then
 	       data_in <= add_res;
 	   end if;
 	   if(present_state = s2) then
