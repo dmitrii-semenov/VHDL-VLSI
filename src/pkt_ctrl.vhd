@@ -49,7 +49,7 @@ end pkt_ctrl;
 
 architecture Behavioral of pkt_ctrl is
 
-type state_type is (s0,s1,s2,s3,s4);
+type state_type is (s0,s1,s2,s3);
 -- s0: wait for first frame 
 -- s1: receive first frame
 -- s2: wait for second frame
@@ -106,9 +106,9 @@ begin
 		
 		when s3 =>
 			if fr_err = '1' then
-				next_state <= s0;
+				next_state <= s2;
 			elsif fr_end = '1' then
-				next_state <= s1;
+				next_state <= s0;
 			else 
 				next_state <= s3;
 			end if;
@@ -121,6 +121,7 @@ process(present_state)
 begin
 	if (present_state = s2) and (frame_num = '0') then
 		we_data_fr1 <= '1';
+		data_fr1 <= data_out;
 	else 
 		we_data_fr1 <= '0';
 	end if;
@@ -131,6 +132,7 @@ process(present_state)
 begin
 	if (present_state = s0) and (frame_num = '1') then
 		we_data_fr2 <= '1';
+		data_fr2 <= data_out;
 	else 
 		we_data_fr2 <= '0';
 	end if;
@@ -170,5 +172,15 @@ begin
     end if;		
 end process; 
 
+--send data from slave to master
+process(present_state) 
+begin
+    if((present_state = s1) or (present_state = s3)) then
+	   wr_data <= '1';
+    else
+	   wr_data <= '0';
+    end if;
+end process;
+ 
 end Behavioral;
 

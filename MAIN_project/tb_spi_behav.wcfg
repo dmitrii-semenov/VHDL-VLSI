@@ -3,108 +3,85 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="TB_SPI_top_behav.wdb" id="1">
+      <db_ref path="tb_arith_unit_behav.wdb" id="1">
          <top_modules>
-            <top_module name="TB_SPI_top" />
+            <top_module name="tb_arith_unit" />
          </top_modules>
       </db_ref>
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="473.832 ns"></ZoomEndTime>
-      <Cursor1Time time="254.361 ns"></Cursor1Time>
+      <ZoomEndTime time="959.434 ns"></ZoomEndTime>
+      <Cursor1Time time="65.732 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="954"></NameColumnWidth>
-      <ValueColumnWidth column_width="279"></ValueColumnWidth>
+      <NameColumnWidth column_width="334"></NameColumnWidth>
+      <ValueColumnWidth column_width="283"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="21" />
-   <wvobject fp_name="/TB_SPI_top/CLK" type="logic">
-      <obj_property name="ElementShortName">CLK</obj_property>
-      <obj_property name="ObjectShortName">CLK</obj_property>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/tb_arith_unit/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/CS_b" type="logic">
-      <obj_property name="ElementShortName">CS_b</obj_property>
-      <obj_property name="ObjectShortName">CS_b</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/rst" type="logic">
+   <wvobject fp_name="/tb_arith_unit/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/SCLK" type="logic">
-      <obj_property name="ElementShortName">SCLK</obj_property>
-      <obj_property name="ObjectShortName">SCLK</obj_property>
+   <wvobject fp_name="/tb_arith_unit/we_data_fr1" type="logic">
+      <obj_property name="ElementShortName">we_data_fr1</obj_property>
+      <obj_property name="ObjectShortName">we_data_fr1</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/MOSI" type="logic">
-      <obj_property name="ElementShortName">MOSI</obj_property>
-      <obj_property name="ObjectShortName">MOSI</obj_property>
+   <wvobject fp_name="/tb_arith_unit/we_data_fr2" type="logic">
+      <obj_property name="ElementShortName">we_data_fr2</obj_property>
+      <obj_property name="ObjectShortName">we_data_fr2</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/data_in" type="array">
-      <obj_property name="ElementShortName">data_in[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_in[15:0]</obj_property>
+   <wvobject fp_name="/tb_arith_unit/data_fr1" type="array">
+      <obj_property name="ElementShortName">data_fr1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr1[15:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/load_data" type="logic">
-      <obj_property name="ElementShortName">load_data</obj_property>
-      <obj_property name="ObjectShortName">load_data</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/MISO" type="logic">
-      <obj_property name="ElementShortName">MISO</obj_property>
-      <obj_property name="ObjectShortName">MISO</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/fr_start" type="logic">
-      <obj_property name="ElementShortName">fr_start</obj_property>
-      <obj_property name="ObjectShortName">fr_start</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/fr_end" type="logic">
-      <obj_property name="ElementShortName">fr_end</obj_property>
-      <obj_property name="ObjectShortName">fr_end</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/fr_err" type="logic">
-      <obj_property name="ElementShortName">fr_err</obj_property>
-      <obj_property name="ObjectShortName">fr_err</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/data_out" type="array">
-      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
-      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+   <wvobject fp_name="/tb_arith_unit/data_fr2" type="array">
+      <obj_property name="ElementShortName">data_fr2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr2[15:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/SCLK_period" type="other">
-      <obj_property name="ElementShortName">SCLK_period</obj_property>
-      <obj_property name="ObjectShortName">SCLK_period</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/frame_width" type="other">
-      <obj_property name="ElementShortName">frame_width</obj_property>
-      <obj_property name="ObjectShortName">frame_width</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/frame_end" type="logic">
-      <obj_property name="ElementShortName">frame_end</obj_property>
-      <obj_property name="ObjectShortName">frame_end</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/frame_start" type="logic">
-      <obj_property name="ElementShortName">frame_start</obj_property>
-      <obj_property name="ObjectShortName">frame_start</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/mosi_cnt" type="other">
-      <obj_property name="ElementShortName">mosi_cnt</obj_property>
-      <obj_property name="ObjectShortName">mosi_cnt</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/miso_cnt" type="other">
-      <obj_property name="ElementShortName">miso_cnt</obj_property>
-      <obj_property name="ObjectShortName">miso_cnt</obj_property>
-   </wvobject>
-   <wvobject fp_name="/TB_SPI_top/miso_data" type="array">
-      <obj_property name="ElementShortName">miso_data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">miso_data[15:0]</obj_property>
+   <wvobject fp_name="/tb_arith_unit/add_res" type="array">
+      <obj_property name="ElementShortName">add_res[15:0]</obj_property>
+      <obj_property name="ObjectShortName">add_res[15:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/mosi_data" type="array">
-      <obj_property name="ElementShortName">mosi_data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">mosi_data[15:0]</obj_property>
+   <wvobject fp_name="/tb_arith_unit/mul_res" type="array">
+      <obj_property name="ElementShortName">mul_res[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mul_res[15:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/TB_SPI_top/CLK_period" type="other">
-      <obj_property name="ElementShortName">CLK_period</obj_property>
-      <obj_property name="ObjectShortName">CLK_period</obj_property>
+   <wvobject fp_name="/tb_arith_unit/clk_period" type="other">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arith_unit/uut/resized_fr1" type="array">
+      <obj_property name="ElementShortName">resized_fr1[16:0]</obj_property>
+      <obj_property name="ObjectShortName">resized_fr1[16:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arith_unit/uut/add_res_s" type="array">
+      <obj_property name="ElementShortName">add_res_s[15:0]</obj_property>
+      <obj_property name="ObjectShortName">add_res_s[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arith_unit/uut/add_res_c" type="array">
+      <obj_property name="ElementShortName">add_res_c[16:0]</obj_property>
+      <obj_property name="ObjectShortName">add_res_c[16:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arith_unit/uut/data_fr1_s" type="array">
+      <obj_property name="ElementShortName">data_fr1_s[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr1_s[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_arith_unit/uut/data_fr2_s" type="array">
+      <obj_property name="ElementShortName">data_fr2_s[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr2_s[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
 </wave_config>
