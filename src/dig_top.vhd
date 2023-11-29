@@ -84,11 +84,18 @@ component arith_unit
 		   add_res                  : out  STD_LOGIC_VECTOR (15 downto 0);
 		   mul_res                  : out  STD_LOGIC_VECTOR (15 downto 0));
   end component;
+  
+component detector_RE
+    Port ( CLK                      : in STD_LOGIC;
+		   rst                      : in STD_LOGIC;
+		   det_in                   : in  STD_LOGIC;
+		   det_out                  : out  STD_LOGIC);
+  end component;
 
 signal fr_start, fr_end, fr_err : STD_LOGIC;
 signal data_out, data_in        : STD_LOGIC_VECTOR(15 downto 0);
 signal data_fr1, data_fr2       : STD_LOGIC_VECTOR(15 downto 0);
-signal load_data                : STD_LOGIC;
+signal load_data, load_data_s   : STD_LOGIC;
 signal add_res, mul_res         : STD_LOGIC_VECTOR(15 downto 0);
 signal we_data_fr1, we_data_fr2 : STD_LOGIC;
     
@@ -107,7 +114,7 @@ begin
 	   fr_err      => fr_err,
 	   data_out    => data_out,
 	   data_in     => data_in,
-	   load_data   => load_data);
+	   load_data   => load_data_s);
 	   
 	unit2: pkt_ctrl
     port map(
@@ -136,5 +143,12 @@ begin
        we_data_fr2 => we_data_fr2,
        data_fr1    => data_fr1,
        data_fr2    => data_fr2);
+       
+    unit4: detector_RE
+    port map(
+	   CLK         => CLK,
+	   rst         => rst,
+       det_in      => load_data,
+       det_out     => load_data_s);
   
 end Behavioral;

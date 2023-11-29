@@ -1,0 +1,16 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  \
+"../../../../../src/arith_unit.vhd" \
+"../../../../../src/ddf.vhd" \
+"../../../../../src/deserializer.vhd" \
+"../../../../../src/detector_FE.vhd" \
+"../../../../../src/detector_RE.vhd" \
+"../../../../../src/dig_top.vhd" \
+"../../../../../src/frame_check.vhd" \
+"../../../../../src/pkt_ctrl.vhd" \
+"../../../../../src/serializer.vhd" \
+"../../../../../src/spi.vhd" \
+"../../../../../tb/TB.vhd" \
+
+# Do not sort compile order
+nosort

@@ -109,9 +109,9 @@ procedure tc_spi_001 (signal clk : STD_LOGIC;
 	cs_b       <= '1';
 	wait for   sclk_period*5;
 	
-	-- send third number 001110.000101 (14.078125)  - shall be ignored
-	frame_width <= 12;
-	mosi_data  <= "000000001110000101";	
+	-- send third number 0001110.0001010 (14.078125)  - shall be ignored
+	frame_width <= 14;
+	mosi_data  <= "000000011100001010";	
     cs_b       <= '0';
 	wait until frame_end = '1';
 	wait for   sclk_period*5;
@@ -147,13 +147,18 @@ procedure tc_spi_001 (signal clk : STD_LOGIC;
 	wait for   sclk_period*5;
 	-- save multiplication result
 	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
 	
 	-- result check
 	if(sum_result /= "0001000000010011") then
-	   write(OUTPUT, "tc_spi_001: relult of sum is NOT correct" & LF);
+	   write(OUTPUT, "tc_spi_001: result of sum FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_spi_001: result of sum PASSED" & LF);
 	end if; 
 	if(mul_result /= "0011101011000010") then
-	   write(OUTPUT, "tc_spi_001: relult of mul is NOT correct" & LF);
+	   write(OUTPUT, "tc_spi_001: result of mul FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_spi_001: result of mul PASSED" & LF);
 	end if;
 
 end procedure;
@@ -229,8 +234,13 @@ end process;
 -- main testcase
 testcase :process
 begin
+    sclk_period <= 100 us; -- 10 kHz SCLK frequency
+    tc_spi_001(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
+    sclk_period <= 10 us; -- 100 kHz SCLK frequency
+    tc_spi_001(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
     sclk_period <= 1 us; -- 1 MHz SCLK frequency
     tc_spi_001(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
+    wait;
 end process;
 
 end Behavioral;

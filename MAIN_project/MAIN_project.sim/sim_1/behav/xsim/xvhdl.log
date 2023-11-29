@@ -1,4 +1,0 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/dig_top.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'dig_top'
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/tb/TB.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'TB'
