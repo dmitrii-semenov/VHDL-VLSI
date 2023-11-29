@@ -57,7 +57,7 @@ type state_type is (s0,s1,s2,s3);
 signal next_state : state_type;
 signal present_state : state_type;
 signal time_1ms_cnt : STD_LOGIC_VECTOR(15 downto 0);
-signal frame_num : STD_LOGIC; -- '0' first frame, '1' - second
+signal frame_num : STD_LOGIC;
 signal time_flag : STD_LOGIC; -- send time error(REQ_ AAU_I_023)
 
 begin
@@ -83,58 +83,69 @@ begin
 				frame_num <= '0';
 			else
 				next_state <= s0;
+				frame_num <= '0';
 			end if;
 			
 		when s1 =>
 			if fr_err = '1' then
 				next_state <= s0;
+				frame_num <= '0';
 			elsif fr_end = '1' then
 				next_state <= s2;
+				frame_num <= '1';
 			else 
 				next_state <= s1;
+				frame_num <= '0';
 			end if;
 		
 		when s2 =>
 			if time_flag = '1' then
 				next_state <= s0;
+				frame_num <= '0';
 			elsif fr_start = '1' then
 				next_state <= s3;
 				frame_num <= '1';
 			else
 				next_state <= s2;
+				frame_num <= '1';
 			end if;
 		
 		when s3 =>
 			if fr_err = '1' then
 				next_state <= s2;
+				frame_num <= '1';
 			elsif fr_end = '1' then
 				next_state <= s0;
+				frame_num <= '0';
 			else 
 				next_state <= s3;
+				frame_num <= '1';
 			end if;
 		
 	end case;
 end process;
 
 -- Enable frame 1 data write 
-process(present_state)
+process(present_state, data_out, frame_num)
 begin
 	if (present_state = s2) and (frame_num = '0') then
 		we_data_fr1 <= '1';
 		data_fr1 <= data_out;
 	else 
 		we_data_fr1 <= '0';
+		data_fr1 <= "0000000000000000";
 	end if;
 end process;
 
 -- Enable frame 2 data write 
-process(present_state)
+process(present_state, data_out, frame_num)
 begin
 	if (present_state = s0) and (frame_num = '1') then
 		we_data_fr2 <= '1';
 		data_fr2 <= data_out;
 	else 
 		we_data_fr2 <= '0';
+		data_fr2 <= "0000000000000000";
 	end if;
 end process;
 

@@ -56,7 +56,6 @@ signal sclk_fe : STD_LOGIC;
 signal sclk_o : STD_LOGIC;
 signal MOSI_o : STD_LOGIC;
 signal deser_en : STD_LOGIC;
-signal ser_en : STD_LOGIC;
 
 begin
 

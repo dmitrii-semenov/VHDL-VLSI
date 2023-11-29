@@ -42,7 +42,7 @@ signal sig_betw : STD_LOGIC;
 
 begin
 
-	p: process(clk) begin
+	p: process(clk, rst) begin
         if (rst = '1') then
            sig_betw <= '0';
            output <= '0';

@@ -42,7 +42,7 @@ signal sig_Q : std_logic;
 
 begin
 
-p_dff : process (clk) begin
+p_dff : process (clk, rst) begin
     if (rst = '1') then
         sig_Q <= '0';
 	elsif rising_edge(clk) then

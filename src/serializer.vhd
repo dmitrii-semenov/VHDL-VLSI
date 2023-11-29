@@ -49,28 +49,26 @@ signal sig_Q_in : STD_LOGIC := '0';
 signal sig_reg_out : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0) := (others => '0');
 signal sig_reg_in : STD_LOGIC_VECTOR ((g_WIDTH - 1) downto 0) := (others => '0');
 signal sig_Q_out : STD_LOGIC :='0';
-signal sig_x_in : natural range 0 to 15 := 0;
-signal sig_x_out : natural range 0 to 15 := 0;
 begin
 
-p_seq: process (clk) begin 
-	if rising_edge(clk) then
-		if rst = '1' then
-			--0
-		else
-			sig_reg_out <= sig_reg_in;
-			sig_Q_out <= sig_Q_in;
-		end if;
+p_seq: process (clk, rst) begin 
+	if rst = '1' then
+		sig_reg_out <= (others => '0');
+		sig_Q_out <= '0';
+	elsif rising_edge(clk) then
+		sig_reg_out <= sig_reg_in;
+		sig_Q_out <= sig_Q_in;
 	end if;
 end process;
 
 
 
-p_comb: process (shift_en, load_en, sig_Q_out, sig_Q_in, sig_x_out, sig_reg_out, stream_en) begin
+p_comb: process (shift_en, load_en, sig_Q_out, sig_Q_in, sig_reg_out, stream_en, data) begin
 	if load_en = '1' then --load data
 		sig_reg_in <= data;
 		sig_Q_in <= '0';
 	elsif stream_en = '1' then
+		sig_reg_in <= sig_reg_out;
 		sig_Q_in <= '0';
 	elsif shift_en = '1' then
 		sig_reg_in <= '0' & sig_reg_out(15 downto 1);

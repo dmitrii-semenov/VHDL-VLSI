@@ -101,11 +101,11 @@ p_add_round: process(add_res_c) begin -- round and overflow of "+" operation
 end process;
 
 p_mul: process (data_fr1_s, data_fr2_s) begin -- "*" operation
-    mul_sign <= data_fr1_s(15) xor data_fr2_s(15);
+   mul_sign <= data_fr1_s(15) xor data_fr2_s(15);
 	mul_res_c <= data_fr1_s * data_fr2_s;
 end process;
 
-p_mul_round: process(add_res_c) begin -- round and overflow of "*" operation
+p_mul_round: process(add_res_c, mul_res_c, mul_sign) begin -- round and overflow of "*" operation
     if (mul_res_c(31 downto 24) = "00000000") and (mul_res_c(23) = mul_sign) then
         mul_res_s <= STD_LOGIC_VECTOR(mul_res_c(23 downto 8));
     elsif (mul_sign = '0') then

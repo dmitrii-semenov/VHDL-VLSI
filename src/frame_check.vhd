@@ -73,7 +73,7 @@ begin
        end if;
       end process;
 
-    out_flags: process(rst, cs_b_fe, cs_b_re) begin
+    out_flags: process(rst, cs_b_fe, cs_b_re, fr_err_c) begin
           fr_start <= cs_b_fe and (not rst);
           fr_end   <= cs_b_re and (not rst);
           fr_err <= fr_err_c and (not rst);
