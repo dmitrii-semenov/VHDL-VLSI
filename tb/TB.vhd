@@ -74,14 +74,14 @@ signal sclk_period : time := 1 us;   -- 1 MHz SCLK
 	
 signal frame_width : integer := 16; -- default frame width
 
-procedure tc_spi_001 (signal clk : STD_LOGIC;
-                      signal miso_data : in STD_LOGIC_VECTOR(17 downto 0);
-	                  signal rst : out STD_LOGIC;
-					  signal cs_b  : out STD_LOGIC;
-					  signal mosi_data : out STD_LOGIC_VECTOR(17 downto 0);
-					  signal sum_result, mul_result : inout STD_LOGIC_VECTOR(15 downto 0);
-					  signal frame_width : out integer
-                      ) is begin
+procedure tc_spi_001  (signal clk : STD_LOGIC;
+                       signal miso_data : in STD_LOGIC_VECTOR(17 downto 0);
+	                   signal rst : out STD_LOGIC;
+					   signal cs_b  : out STD_LOGIC;
+					   signal mosi_data : out STD_LOGIC_VECTOR(17 downto 0);
+					   signal sum_result, mul_result : inout STD_LOGIC_VECTOR(15 downto 0);
+					   signal frame_width : out integer
+                       ) is begin
     
     -- Reset DUT
     rst <= '0';
@@ -163,6 +163,453 @@ procedure tc_spi_001 (signal clk : STD_LOGIC;
 
 end procedure;
 
+procedure tc_au_002   (signal clk : STD_LOGIC;
+                       signal miso_data : in STD_LOGIC_VECTOR(17 downto 0);
+	                   signal rst : out STD_LOGIC;
+					   signal cs_b  : out STD_LOGIC;
+					   signal mosi_data : out STD_LOGIC_VECTOR(17 downto 0);
+					   signal sum_result, mul_result : inout STD_LOGIC_VECTOR(15 downto 0);
+					   signal frame_width : out integer
+                       ) is begin
+    
+    -- Reset DUT
+    rst <= '0';
+    wait for clk_period*5;
+    rst <= '1';		
+    wait for clk_period*5;
+    rst <= '0';
+	wait for clk_period*5;
+	
+	-- send first number 00000111.10100111 (7.65234375)
+	frame_width <= 16;
+	mosi_data  <= "000000011110100111";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send second number 00001001.10011001 (9.59765625)
+	frame_width <= 16;
+	mosi_data  <= "000000100110011001";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "0001000101000000") then
+	   write(OUTPUT, "tc_au_002: result of sum FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_au_002: result of sum PASSED" & LF);
+	end if; 
+	if(mul_result /= "0100100101110001") then
+	   write(OUTPUT, "tc_au_002: result of mul FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_au_002: result of mul PASSED" & LF);
+	end if;
+
+end procedure;
+
+procedure tc_rst_003  (signal clk : STD_LOGIC;
+                       signal miso_data : in STD_LOGIC_VECTOR(17 downto 0);
+	                   signal rst : out STD_LOGIC;
+					   signal cs_b  : out STD_LOGIC;
+					   signal mosi_data : out STD_LOGIC_VECTOR(17 downto 0);
+					   signal sum_result, mul_result : inout STD_LOGIC_VECTOR(15 downto 0);
+					   signal frame_width : out integer
+                       ) is begin
+    
+    -- Reset DUT
+    rst <= '0';
+    wait for clk_period*5;
+    rst <= '1';		
+    wait for clk_period*5;
+    rst <= '0';
+	wait for clk_period*5;
+	
+	-- send first number 00000101.00100000 (5.125)
+	frame_width <= 16;
+	mosi_data  <= "000000010100100000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- reset
+	wait for 1.5 ms; 
+	
+	-- send first number 00001011.11000000 (11.75)
+	frame_width <= 16;
+	mosi_data  <= "000000101111000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send second number 00000111.00100000 (7.125)
+	frame_width <= 16;
+	mosi_data  <= "000000011100100000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "0001001011100000") then
+	   write(OUTPUT, "tc_rst_003: result of sum FAILED for 1.5ms delay" & LF);
+	else
+	   write(OUTPUT, "tc_rst_003: result of sum PASSED for 1.5ms delay" & LF);
+	end if; 
+	if(mul_result /= "0101001110111000") then
+	   write(OUTPUT, "tc_rst_003: result of mul FAILED for 1.5ms delay" & LF);
+	else
+	   write(OUTPUT, "tc_rst_003: result of mul PASSED for 1.5ms delay" & LF);
+	end if;
+	
+	-- send first number 00000101.00100000 (5.125)
+	frame_width <= 16;
+	mosi_data  <= "000000010100100000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	wait for 0.9 ms;
+	
+	-- send second number 00001011.11000000 (11.75)
+	frame_width <= 16;
+	mosi_data  <= "000000101111000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "0001000011100000") then
+	   write(OUTPUT, "tc_rst_003: result of sum FAILED for 0.9ms delay" & LF);
+	else
+	   write(OUTPUT, "tc_rst_003: result of sum PASSED for 0.9ms delay" & LF);
+	end if; 
+	if(mul_result /= "0011110000111000") then
+	   write(OUTPUT, "tc_rst_003: result of mul FAILED for 0.9ms delay" & LF);
+	else
+	   write(OUTPUT, "tc_rst_003: result of mul PASSED for 0.9ms delay" & LF);
+	end if;
+	
+	-- send first number 00000101.00100000 (5.125)
+	frame_width <= 16;
+	mosi_data  <= "000000010100100000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- reset
+	wait for 1.1 ms; 
+	
+	-- send first number 00001011.11000000 (11.75)
+	frame_width <= 16;
+	mosi_data  <= "000000101111000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send second number 00000111.00100000 (7.125)
+	frame_width <= 16;
+	mosi_data  <= "000000011100100000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "0001001011100000") then
+	   write(OUTPUT, "tc_rst_003: result of sum FAILED for 1.1ms delay" & LF);
+	else
+	   write(OUTPUT, "tc_rst_003: result of sum PASSED for 1.1ms delay" & LF);
+	end if; 
+	if(mul_result /= "0101001110111000") then
+	   write(OUTPUT, "tc_rst_003: result of mul FAILED for 1.1ms delay" & LF);
+	else
+	   write(OUTPUT, "tc_rst_003: result of mul PASSED for 1.1ms delay" & LF);
+	end if;
+
+end procedure;
+
+procedure tc_arit_004 (signal clk : STD_LOGIC;
+                       signal miso_data : in STD_LOGIC_VECTOR(17 downto 0);
+	                   signal rst : out STD_LOGIC;
+					   signal cs_b  : out STD_LOGIC;
+					   signal mosi_data : out STD_LOGIC_VECTOR(17 downto 0);
+					   signal sum_result, mul_result : inout STD_LOGIC_VECTOR(15 downto 0);
+					   signal frame_width : out integer
+                       ) is begin
+    
+    -- Reset DUT
+    rst <= '0';
+    wait for clk_period*5;
+    rst <= '1';		
+    wait for clk_period*5;
+    rst <= '0';
+	wait for clk_period*5;
+	
+	-- send first number 01101001.10000000 (105.5)
+	frame_width <= 16;
+	mosi_data  <= "000110100110000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send second number 00111101.01100000 (61.375)
+	frame_width <= 16;
+	mosi_data  <= "000011110101100000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "0111111111111111") then
+	   write(OUTPUT, "tc_arit_004: result of sum FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_arit_004: result of sum PASSED" & LF);
+	end if; 
+	if(mul_result /= "0111111111111111") then
+	   write(OUTPUT, "tc_arit_004: result of mul FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_arit_004: result of mul PASSED" & LF);
+	end if;
+	
+	-- send first number 11101001.10000000 (-105.5)
+	frame_width <= 16;
+	mosi_data  <= "001110100110000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send second number 11001111.01000000 (-79.25)
+	frame_width <= 16;
+	mosi_data  <= "001100111101000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "1000000000000000") then
+	   write(OUTPUT, "tc_arit_004: result of sum FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_arit_004: result of sum PASSED" & LF);
+	end if; 
+	if(mul_result /= "0111111111111111") then
+	   write(OUTPUT, "tc_arit_004: result of mul FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_arit_004: result of mul PASSED" & LF);
+	end if;
+	
+	-- send first number 00101111.01000000 (47.25)
+	frame_width <= 16;
+	mosi_data  <= "000010111101000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send second number 10001111.10000000 (-15.5)
+	frame_width <= 16;
+	mosi_data  <= "001000111110000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	
+	-- send two numbers to receive the results, value is not important
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";	
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save addition result
+	sum_result <= miso_data(15 downto 0);
+	
+	frame_width <= 16;
+	mosi_data  <= "000000000000000000";		
+    cs_b       <= '0';
+	wait until frame_end = '1';
+	wait for   sclk_period*5;
+	cs_b       <= '1';
+	wait for   sclk_period*5;
+	-- save multiplication result
+	mul_result <= miso_data(15 downto 0);
+	wait for 1 ns;
+	
+	-- result check
+	if(sum_result /= "0001111111000000") then
+	   write(OUTPUT, "tc_arit_004: result of sum FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_arit_004: result of sum PASSED" & LF);
+	end if; 
+	if(mul_result /= "1000000000000000") then
+	   write(OUTPUT, "tc_arit_004: result of mul FAILED" & LF);
+	else
+	   write(OUTPUT, "tc_arit_004: result of mul PASSED" & LF);
+	end if;
+
+end procedure;
+
 begin
 
 -- Instantiate the Unit Under Test (UUT)
@@ -240,6 +687,12 @@ begin
     tc_spi_001(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
     sclk_period <= 1 us; -- 1 MHz SCLK frequency
     tc_spi_001(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
+    
+    tc_au_002(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
+    
+    tc_rst_003(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
+    
+    tc_arit_004(clk, miso_data, rst, cs_b, mosi_data, sum_result, mul_result, frame_width);
     wait;
 end process;
 

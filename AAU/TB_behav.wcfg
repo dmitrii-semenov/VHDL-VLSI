@@ -10,15 +10,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
-      <ZoomEndTime time="200.000001 us"></ZoomEndTime>
-      <Cursor1Time time="107.315480 us"></Cursor1Time>
+      <ZoomStartTime time="22,520.858965 us"></ZoomStartTime>
+      <ZoomEndTime time="23,000.886268 us"></ZoomEndTime>
+      <Cursor1Time time="22,831.047806 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="358"></NameColumnWidth>
-      <ValueColumnWidth column_width="348"></ValueColumnWidth>
+      <NameColumnWidth column_width="275"></NameColumnWidth>
+      <ValueColumnWidth column_width="514"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="18" />
+   <WVObjectSize size="26" />
    <wvobject fp_name="/TB/CLK" type="logic">
       <obj_property name="ElementShortName">CLK</obj_property>
       <obj_property name="ObjectShortName">CLK</obj_property>
@@ -94,5 +94,45 @@
    <wvobject fp_name="/TB/miso_cnt" type="other">
       <obj_property name="ElementShortName">miso_cnt</obj_property>
       <obj_property name="ObjectShortName">miso_cnt</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/data_fr1" type="array">
+      <obj_property name="ElementShortName">data_fr1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr1[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/data_fr2" type="array">
+      <obj_property name="ElementShortName">data_fr2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr2[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/add_res" type="array">
+      <obj_property name="ElementShortName">add_res[15:0]</obj_property>
+      <obj_property name="ObjectShortName">add_res[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/mul_res" type="array">
+      <obj_property name="ElementShortName">mul_res[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mul_res[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/data_fr1_s" type="array">
+      <obj_property name="ElementShortName">data_fr1_s[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr1_s[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/data_fr2_s" type="array">
+      <obj_property name="ElementShortName">data_fr2_s[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fr2_s[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/mul_res_c" type="array">
+      <obj_property name="ElementShortName">mul_res_c[31:0]</obj_property>
+      <obj_property name="ObjectShortName">mul_res_c[31:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/TB/uut/unit3/add_res_c" type="array">
+      <obj_property name="ElementShortName">add_res_c[16:0]</obj_property>
+      <obj_property name="ObjectShortName">add_res_c[16:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
 </wave_config>

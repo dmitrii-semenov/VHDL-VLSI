@@ -5,3 +5,17 @@ tc_spi_001: result of sum PASSED
 tc_spi_001: result of mul PASSED
 tc_spi_001: result of sum PASSED
 tc_spi_001: result of mul PASSED
+tc_au_002: result of sum PASSED
+tc_au_002: result of mul PASSED
+tc_rst_003: result of sum PASSED for 1.5ms delay
+tc_rst_003: result of mul PASSED for 1.5ms delay
+tc_rst_003: result of sum PASSED for 0.9ms delay
+tc_rst_003: result of mul PASSED for 0.9ms delay
+tc_rst_003: result of sum PASSED for 1.1ms delay
+tc_rst_003: result of mul PASSED for 1.1ms delay
+tc_arit_004: result of sum PASSED
+tc_arit_004: result of mul PASSED
+tc_arit_004: result of sum PASSED
+tc_arit_004: result of mul PASSED
+tc_arit_004: result of sum FAILED
+tc_arit_004: result of mul PASSED

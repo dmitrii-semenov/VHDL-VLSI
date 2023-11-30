@@ -93,7 +93,7 @@ end process;
 p_add_round: process(add_res_c) begin -- round and overflow of "+" operation
     if (add_res_c(16 downto 15) = "01") then
         add_res_s <= "0111111111111111"; -- round if result is higher than max
-    elsif (add_res_c(16 downto 15) = "10") then
+    elsif (add_res_c(16 downto 15) = "10" or add_res_c(16 downto 15) = "11") then
         add_res_s <= "1000000000000000"; -- round if result is lower than max
     else
         add_res_s <= STD_LOGIC_VECTOR(add_res_c(15 downto 0));
