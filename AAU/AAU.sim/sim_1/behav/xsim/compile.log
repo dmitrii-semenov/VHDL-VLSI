@@ -1,2 +1,2 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/src/arith_unit.vhd" into library xil_defaultlib
-INFO: [VRFC 10-3107] analyzing entity 'arith_unit'
+INFO: [VRFC 10-163] Analyzing VHDL file "Z:/Documents/GitHub/VHDL-VLSI/tb/TB.vhd" into library xil_defaultlib
+INFO: [VRFC 10-3107] analyzing entity 'TB'

@@ -17,5 +17,5 @@ tc_arit_004: result of sum PASSED
 tc_arit_004: result of mul PASSED
 tc_arit_004: result of sum PASSED
 tc_arit_004: result of mul PASSED
-tc_arit_004: result of sum FAILED
+tc_arit_004: result of sum PASSED
 tc_arit_004: result of mul PASSED

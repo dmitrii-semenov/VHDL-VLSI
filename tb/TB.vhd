@@ -506,7 +506,7 @@ procedure tc_arit_004 (signal clk : STD_LOGIC;
 	
 	-- send first number 11101001.10000000 (-105.5)
 	frame_width <= 16;
-	mosi_data  <= "001110100110000000";	
+	mosi_data  <= "001000100110000000";	
     cs_b       <= '0';
 	wait until frame_end = '1';
 	wait for   sclk_period*5;
@@ -597,7 +597,7 @@ procedure tc_arit_004 (signal clk : STD_LOGIC;
 	wait for 1 ns;
 	
 	-- result check
-	if(sum_result /= "0001111111000000") then
+	if(sum_result /= "1011111011000000") then
 	   write(OUTPUT, "tc_arit_004: result of sum FAILED" & LF);
 	else
 	   write(OUTPUT, "tc_arit_004: result of sum PASSED" & LF);
